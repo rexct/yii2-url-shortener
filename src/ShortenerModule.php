@@ -34,7 +34,7 @@ class ShortenerModule extends Module
      * @var array
      */
     public $urlConfig = [
-        '<id:[\d\w]{4}>' => 'shortener/default/parse',
+        '<id:[\d\w]{12}>' => 'shortener/default/parse',
     ];
 
     /**
@@ -100,6 +100,7 @@ class ShortenerModule extends Module
             $this->options[$dayHour],
             $this->options[array_sum(mb_str_split($date->format('u')))],
             $this->options[$date->format('s')],
+            substr(str_replace('%', '', urlencode(base64_encode(random_bytes(8)))),0, 8),
         ];
         return join("", $id);
     }
